@@ -21,6 +21,31 @@ object FromUniqueFlatResultSetNester {
     repo.map(m => this.selectFields(m, fields)).distinct.groupBy(_ (key))
   }
 
+  def getGrouperConf(): Seq[GroupByConf] ={
+    Seq(
+      GroupByConf("employeeByIgg", Seq("employee.igg"), "employee.igg"),
+      GroupByConf("followupByIgg", Seq("flw.igg", "flw.trainingId"), "flw.igg"),
+      GroupByConf("trainingByTrainingId", Seq("training.trainingId", "training.desc"), "training.trainingId"),
+      GroupByConf("subjectTitlesByTrainingId", Seq("subject.trainingId", "subject.titleFr"), "subject.trainingId")
+    )
+  }
+
+  def buildQuery(): String = {
+    "select x from a join b join c where filter = z"
+  }
+
+  def getNestChildren(): Nest ={
+//Nest("employeeByIgg", "", "employees", Some(
+//    Nest("followupByIgg", "employee.igg", "followups",
+//      Some(Nest("trainingByTrainingId", "flw.trainingId", "trainings",
+//        Some(Nest("subjectTitlesByTrainingId", "training.trainingId", "subjects", None))
+//      )))))
+    Nest("followupByIgg", "employee.igg", "followups",
+      Some(Nest("trainingByTrainingId", "flw.trainingId", "trainings",
+        Some(Nest("subjectTitlesByTrainingId", "training.trainingId", "subjects", None))
+      )))
+  }
+
   def executeQuery(query: String): Seq[Map[String, String]] = {
     Seq(
       Map("employee.igg" -> "i_1","flw.igg" -> "i_1", "flw.trainingId" -> "t_1", "training.trainingId" -> "t_1", "training.desc" -> "A", "subject.titleFr" -> "tFr_1", "subject.trainingId" -> "t_1"),
@@ -31,43 +56,29 @@ object FromUniqueFlatResultSetNester {
 
   def process(): Unit ={
     //read nesting conf
-    val nestChildren =
-      Nest("followupByIgg", "employee.igg", "followups",
-        Some(Nest("trainingByTrainingId", "flw.trainingId", "trainings",
-          Some(Nest("subjectTitlesByTrainingId", "training.trainingId", "subjects", None))
-        )))
+    val nestConf = this.getNestChildren()
     //build query with conditions
-    val query: String = "select x from a join b join c where filter = z"
-    //pg.executeQuery() => resultSet
-
+    val query: String = this.buildQuery()
     //get resultSet
     val resultSet = this.executeQuery(query)
-
     //prepare join with group by key
-    val groupByConfs = Seq(
-      GroupByConf("employeeByIgg", Seq("employee.igg"), "employee.igg"),
-      GroupByConf("followupByIgg", Seq("flw.igg", "flw.trainingId"), "flw.igg"),
-      GroupByConf("trainingByTrainingId", Seq("training.trainingId", "training.desc"), "training.trainingId"),
-      GroupByConf("subjectTitlesByTrainingId", Seq("subject.trainingId", "subject.titleFr"), "subject.trainingId")
-    )
-                          //Name         grpKey     Rows
-    val resultSetByJoinKey: Map[String, Map[String, Seq[Map[String, String]]]] = groupByConfs
-      .map(c =>  c.name -> this.grouper(c.fields, resultSet, c.key))
-      .toMap
+    val groupByConfs = this.getGrouperConf
+    val resultSetByJoinKey = this.getChildrenMapByParentId(resultSet, groupByConfs)
     //nest
-    val rootName = groupByConfs(0).name
     val result =
-      resultSetByJoinKey(rootName)
+      resultSetByJoinKey(groupByConfs(0).name)
       .flatMap(_._2)
-      .map(x => this.nestByConf(x, resultSetByJoinKey, nestChildren))
+      .map(x => this.nestByConf(x, resultSetByJoinKey, nestConf))
 
-    //done
+    //print or return
     implicit val formats = DefaultFormats
-    println{ write(result)}
+    println{ write(Map("employees" -> result))}
   }
 
-  def main(args: Array[String]): Unit = {
-     process()
+  def getChildrenMapByParentId(resultSet: Seq[Map[String, String]], groupByConfs: Seq[GroupByConf]): Map[String, Map[String, Seq[Map[String, String]]]]  = {
+    groupByConfs
+      .map(c => c.name -> this.grouper(c.fields, resultSet, c.key))
+      .toMap
   }
 
   def nestByConf(parent: Map[String, Any], childrenSet: Map[String, Map[String, Seq[Map[String, String]]]], n: Nest): Map[String, Any] = {
@@ -89,4 +100,7 @@ object FromUniqueFlatResultSetNester {
     m.filter(kv => fields contains kv._1)
   }
 
+  def main(args: Array[String]): Unit = {
+    this.process()
+  }
 }
