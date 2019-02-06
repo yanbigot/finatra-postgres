@@ -10,7 +10,7 @@ import net.liftweb.json.Serialization.write
   * employee_1, followup_1, training_1, subject_2
   * employee_1, followup_1, training_1, subject_3
   * employee_1, followup_1, training_1, subject_4
-  * => here we have something like 7/16 unuseful cos redundant data...
+  * => here we have something like 9 out of 16 unuseful cos redundant data...
   */
 object FromUniqueFlatResultSetNester {
 
