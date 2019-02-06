@@ -47,8 +47,6 @@ object FromUniqueFlatResultSetNester {
       }
     ).toMap
     //nest
-    println(resultSetByJoinKey)
-
     val rootName = groupByConfs(0).name
     val result =
       resultSetByJoinKey(rootName)
@@ -61,55 +59,7 @@ object FromUniqueFlatResultSetNester {
   }
 
   def main(args: Array[String]): Unit = {
-    val repo = Seq(
-      Map("employee.igg" -> "i_1","flw.igg" -> "i_1", "flw.trainingId" -> "t_1", "training.trainingId" -> "t_1", "training.desc" -> "A", "subject.titleFr" -> "tFr_1", "subject.trainingId" -> "t_1"),
-      Map("employee.igg" -> "i_1","flw.igg" -> "i_1", "flw.trainingId" -> "t_1", "training.trainingId" -> "t_1", "training.desc" -> "A", "subject.titleFr" -> "tFr_2", "subject.trainingId" -> "t_1"),
-      Map("employee.igg" -> "i_1","flw.igg" -> "i_1", "flw.trainingId" -> "t_2", "training.trainingId" -> "t_2", "training.desc" -> "A", "subject.titleFr" -> "tFr_1", "subject.trainingId" -> "t_2")
-    )
-
-    val employeeFields = Seq("employee.igg")
-    val employeeByIgg: Map[String, Seq[Map[String, String]]] = repo.map(m => this.selectFields(m, employeeFields)).distinct.groupBy(_ ("employee.igg"))
-    println(employeeByIgg)
-
-    val followupFields = Seq("flw.igg", "flw.trainingId")
-    val followupByIgg = repo.map(m => this.selectFields(m, followupFields)).distinct.groupBy(_ ("flw.igg"))
-    println(followupByIgg)
-    val followupByTrainingId = repo.map(m => this.selectFields(m, followupFields)).distinct.groupBy(_ ("flw.trainingId"))
-    println(followupByTrainingId)
-
-    val trainingFields = Seq("training.trainingId", "training.desc")
-    val trainingByTrainingId = repo.map(m => this.selectFields(m, trainingFields)).distinct.groupBy(_ ("training.trainingId"))
-    println(trainingByTrainingId)
-
-    val subjectFields = Seq("subject.trainingId", "subject.titleFr")
-    val subjectTitlesByTrainingId: Map[String, Seq[Map[String, String]]] = repo.map(m => this.selectFields(m, subjectFields)).distinct.groupBy(_ ("subject.trainingId"))
-    println(subjectTitlesByTrainingId)
-
-
-                     //Seq[Map[String, Seq[Map[String, String]]]]
-    val childrenSet: Map[String, Map[String, Seq[Map[String, String]]]] = Map(
-      "followupByIgg" -> followupByIgg,
-      "followupByTrainingId" -> followupByTrainingId,
-      "trainingByTrainingId" -> trainingByTrainingId,
-      "subjectTitlesByTrainingId" -> subjectTitlesByTrainingId
-    )
-
-    println("--------------")
-    val nestRoot =
-      Nest("followupByIgg", "employee.igg", "followups",
-        Some(Nest("trainingByTrainingId", "flw.trainingId", "trainings",
-          Some(Nest("subjectTitlesByTrainingId", "training.trainingId", "subjects", None))
-      )))
-
-    val nested =   employeeByIgg
-        .flatMap(_._2)
-        .map(emp => this.nestByConf(emp, childrenSet, nestRoot))
-
-//    println(nested)
-    implicit val formats = DefaultFormats
-    println{ write(nested)}
-
-    process()
+     process()
   }
 
   def nestByConf(parent: Map[String, Any], childrenSet: Map[String, Map[String, Seq[Map[String, String]]]], n: Nest): Map[String, Any] = {
