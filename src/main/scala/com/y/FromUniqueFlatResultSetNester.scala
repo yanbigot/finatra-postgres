@@ -35,11 +35,6 @@ object FromUniqueFlatResultSetNester {
   }
 
   def getNestChildren(): Nest ={
-//Nest("employeeByIgg", "", "employees", Some(
-//    Nest("followupByIgg", "employee.igg", "followups",
-//      Some(Nest("trainingByTrainingId", "flw.trainingId", "trainings",
-//        Some(Nest("subjectTitlesByTrainingId", "training.trainingId", "subjects", None))
-//      )))))
     Nest("followupByIgg", "employee.igg", "followups",
       Some(Nest("trainingByTrainingId", "flw.trainingId", "trainings",
         Some(Nest("subjectTitlesByTrainingId", "training.trainingId", "subjects", None))
