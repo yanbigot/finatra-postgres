@@ -1,0 +1,43 @@
+[
+  {
+    "followups": [
+      {
+        "flw.trainingId": "t_1",
+        "trainings": [
+          {
+            "training.trainingId": "t_1",
+            "subjects": [
+              {
+                "subject.trainingId": "t_1",
+                "subject.titleFr": "tFr_1"
+              },
+              {
+                "subject.trainingId": "t_1",
+                "subject.titleFr": "tFr_2"
+              }
+            ],
+            "training.desc": "A"
+          }
+        ],
+        "flw.igg": "i_1"
+      },
+      {
+        "flw.trainingId": "t_2",
+        "trainings": [
+          {
+            "training.trainingId": "t_2",
+            "subjects": [
+              {
+                "subject.trainingId": "t_2",
+                "subject.titleFr": "tFr_1"
+              }
+            ],
+            "training.desc": "A"
+          }
+        ],
+        "flw.igg": "i_1"
+      }
+    ],
+    "employee.igg": "i_1"
+  }
+]

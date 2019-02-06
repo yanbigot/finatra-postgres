@@ -1,0 +1,28 @@
+#Scope and purpose
+Main use case addressed: offering data exposition on a non relational data model (n - n relationship between entities)
+ ,providing the capability to join relevant data and render them in a json like nested structure.
+
+#Overview
+The project aims to be an accelerator for building REST Api by configuration and offering an open toolbox for custom implementation.
+Main components:
+- Configuration file
+- Controller with
+    - RequestParam processor
+- Service with
+    - Fetch processor
+    - Transform processor
+    - Nest processor
+- Repository
+-
+
+
+Its purpose is to fetch data in a repository instance and produce datasets, apply transformation to these datasets
+and eventually apply join equivalent
+Therefore 3 autonomous layers are found
+- Fetch, returns a result set of each entities declared in configuration file
+- Transform
+- Nest
+
+
+
+How to create a new API ?

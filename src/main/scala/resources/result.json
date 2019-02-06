@@ -1,0 +1,110 @@
+[
+  {
+    "name": "Mark",
+    "igg": "igg1",
+    "ent": "EMPLOYEES",
+    "followupS": [
+      {
+        "ent": "FOLLOWUPS",
+        "trainingS": [
+          {
+            "trainingId": "t1",
+            "title": "title1",
+            "ent": "TRAININGS"
+          }
+        ],
+        "sessionS": [
+          {
+            "trainingId": "t1",
+            "sessionId": "s1",
+            "ent": "SESSIONS",
+            "sessionPartS": [
+              {
+                "name": "part",
+                "sessionId": "s1",
+                "ent": "SESSION_PARTS",
+                "NE": [
+                  {
+                    "name": "part",
+                    "sessionId": "s1",
+                    "ent": "SESSION_PARTS"
+                  },
+                  {
+                    "name": "part",
+                    "sessionId": "s1",
+                    "ent": "SESSION_PARTS"
+                  }
+                ]
+              },
+              {
+                "name": "part",
+                "sessionId": "s1",
+                "ent": "SESSION_PARTS",
+                "NE": [
+                  {
+                    "name": "part",
+                    "sessionId": "s1",
+                    "ent": "SESSION_PARTS"
+                  },
+                  {
+                    "name": "part",
+                    "sessionId": "s1",
+                    "ent": "SESSION_PARTS"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "trainingId": "t1",
+            "sessionId": "s2",
+            "ent": "SESSIONS"
+          }
+        ],
+        "igg": "igg1",
+        "trainingId": "t1"
+      },
+      {
+        "ent": "FOLLOWUPS",
+        "trainingS": [
+          {
+            "trainingId": "curriculum_1",
+            "title": "title1",
+            "ent": "TRAININGS"
+          }
+        ],
+        "igg": "igg1",
+        "trainingIdS": [
+          {
+            "curriculumId": "curriculum_1",
+            "trainingId": "t_cur_child",
+            "ent": "CURRICULUMS"
+          }
+        ],
+        "trainingId": "curriculum_1"
+      },
+      {
+        "trainingId": "t_cur_child",
+        "igg": "igg1",
+        "ent": "FOLLOWUPS",
+        "trainingS": [
+          {
+            "trainingId": "t_cur_child",
+            "title": "title1",
+            "ent": "TRAININGS"
+          }
+        ]
+      },
+      {
+        "trainingId": "t9999NE",
+        "igg": "igg1",
+        "ent": "FOLLOWUPS"
+      }
+    ]
+  },
+  {
+    "name": "NE",
+    "igg": "iggZ",
+    "ent": "EMPLOYEES"
+  }
+]

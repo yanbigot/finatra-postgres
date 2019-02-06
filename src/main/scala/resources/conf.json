@@ -1,0 +1,46 @@
+{
+  "nester": [
+    {
+      "display": "employees",
+      "source": "MYL_EMPLOYEE",
+      "keys": "ggi",
+      "parentKeys": null,
+      "functions": null,
+      "children": [
+        {
+          "display": "followups",
+          "source": "FOLLOWUPS",
+          "keys": "ggi",
+          "parentKeys": "ggi",
+          "functions": null,
+          "children": [
+            {
+              "display": "training",
+              "source": "TRAINING_TYPE",
+              "keys": "trainingId",
+              "parentKeys": "trainingId",
+              "functions": null,
+              "children": null
+            },
+            {
+              "display": "curriculum",
+              "source": "CURRICULUM_TYPE",
+              "keys": "trainingId",
+              "parentKeys": "trainingId",
+              "functions": null,
+              "children": null
+            },
+            {
+              "display": "trainingIds",
+              "source": "CURRICULUM_TYPE_TRAINING_IDS",
+              "keys": "trainingId",
+              "parentKeys": "trainingId",
+              "functions": null,
+              "children": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
