@@ -22,6 +22,7 @@ object PostgresClient{
     .withBinaryResults(true)
     .withBinaryParams(true)
     .newRichClient("localhost:5432")
+
   def main( args: Array[String] ): Unit = {
     //println(
       Await.result(

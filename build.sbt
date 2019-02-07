@@ -37,6 +37,9 @@ libraryDependencies ++= Seq(
   "org.specs2" %% "specs2-mock" % "2.4.17" % "test",
 
   "io.github.finagle" %% "finagle-postgres" % "0.7.0",
-  "net.liftweb" %% "lift-json" % "3.3.0"
+  "net.liftweb" %% "lift-json" % "3.3.0",
 
+  "ru.yandex.qatools.embed" % "postgresql-embedded" % "2.10" % Test,
+
+  "org.postgresql" % "postgresql" % "42.2.5"
 )
