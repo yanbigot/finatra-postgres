@@ -105,13 +105,16 @@ public class PgTest {
             }
 
             final Statement statement = conn.createStatement();
-            String query = queryFromFile("D:\\SCALA_WORKSPACE\\finatra-postgres\\src\\test\\resources\\query.sql");
+            String query = queryFromFile("D:\\SCALA_WORKSPACE\\finatra-postgres\\src\\test\\resources\\a.sql");
             statement.execute(query);
             while(statement.getResultSet().next()){
-                System.out.println("[" + statement.getResultSet().getString(0) + "]");
-                System.out.println("[" + statement.getResultSet().getString(1) + "]");
-                System.out.println("[" + statement.getResultSet().getString(2) + "]");
-                System.out.println("[" + statement.getResultSet().getString(3) + "]");
+//                System.out.println("[" + statement.getResultSet().getString(0) + "]");
+                System.out.println("---------------------------------------------------------------------------------------------");
+                System.out.print("[" + statement.getResultSet().getString(1) + "]");
+                System.out.print("[" + statement.getResultSet().getString(2) + "]");
+                System.out.print("[" + statement.getResultSet().getString(3) + "]");
+                System.out.print("[" + statement.getResultSet().getString(4) + "]");
+                System.out.println("---------------------------------------------------------------------------------------------");
             }
             conn.close();
         } catch (SQLException e) {
