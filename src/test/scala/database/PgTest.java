@@ -34,6 +34,7 @@ public class PgTest {
 
     public static void load(){
         postgres.getProcess().get().importFromFile(new File("import.sql"));
+
     }
 
     public static String queryFromFile(String path) throws IOException {
@@ -56,8 +57,15 @@ public class PgTest {
         try {
             final Connection conn = getConnection(url);
             load();
+            final Statement crtlStatement = conn.createStatement();
+            crtlStatement.execute("select schema_name\n" +
+                    "from information_schema.schemata");
+            crtlStatement.getResultSet();
+            while(crtlStatement.getResultSet().next()){
+                System.out.println("[" + crtlStatement.getResultSet().getString(1));
+            }
             final Statement statement = conn.createStatement();
-            String query = queryFromFile("D:\\SCALA_WORKSPACE\\finatra-postgres\\src\\test\\resources\\query.sql");
+            String query = queryFromFile("D:\\SCALA_WORKSPACE\\finatra-postgres\\src\\test\\resources\\a.sql");
             statement.execute(query);
             while(statement.getResultSet().next()){
                 System.out.println("[" + statement.getResultSet() + "]");
